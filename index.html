@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ПЭПРИ — ПЕРВЫЙ ЭКЗАМЕН ПО РОССИЙСКОМУ ИНТЕРНЕТУ</title>
+    <style>
+        body {
+            background-color: #d4d0c8; /* Тот самый серый */
+            font-family: "Tahoma", sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #000;
+        }
+
+        #main-window {
+            width: 95%;
+            max-width: 700px;
+            background: #fff;
+            border: 2px solid #000;
+            box-shadow: 4px 4px 0px #808080;
+            padding: 25px;
+            position: relative;
+        }
+
+        .header-line {
+            border-bottom: 3px double #000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 { font-size: 1.4rem; text-transform: uppercase; margin: 5px 0; }
+        
+        .warning-strip {
+            background: #000;
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+
+        .question-box { min-height: 250px; }
+        .q-title { font-weight: bold; margin-bottom: 15px; font-size: 1.1rem; line-height: 1.4; }
+
+        .options label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #d4d0c8;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .options label:hover { background: #f0f0f0; }
+
+        .footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            background: #d4d0c8;
+            border: 2px solid;
+            border-color: #fff #808080 #808080 #fff;
+            padding: 10px 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:active { border-color: #808080 #fff #fff #808080; }
+
+        /* --- НОВЫЙ ЭКРАН АННУЛИРОВАНО (ПО ФОТО) --- */
+        #ban-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #e5e1da; /* Цвет бумаги */
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ban-card {
+            background: white;
+            width: 85%;
+            max-width: 500px;
+            border: 2px solid #8b1d22; /* Красная кайма */
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stamp-box {
+            display: inline-block;
+            border: 4px solid #8b1d22;
+            color: #8b1d22;
+            padding: 5px 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            transform: rotate(-3deg);
+            margin-bottom: 50px;
+        }
+
+        .ban-main-text {
+            font-family: "Georgia", serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .ban-sub-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 40px;
+        }
+
+        .ban-footer {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #999;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        /* --- ДИПЛОМ --- */
+        #diploma {
+            text-align: center;
+            border: 5px double #daa520;
+            padding: 30px;
+            background: #fffdf5;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div id="ban-screen">
+    <div class="ban-card">
+        <div class="stamp-box">АННУЛИРОВАНО</div>
+        <div class="ban-main-text">Обнаружено списывание</div>
+        <div class="ban-sub-text">
+            Ваш экзамен не будет зачтён. Балл не выставляется, пин не выдаётся. <br><br>
+            Согласно правилам, повторная сдача невозможна.
+        </div>
+        <div class="ban-footer">
+            ПЭПРИ • 2026 • НАРУШЕНИЕ П. 3 ПРАВИЛ
+        </div>
+    </div>
+</div>
+
+<div id="main-window">
+    <div class="header-line">
+        <h1>П Э П Р И</h1>
+        <div style="font-size: 0.8rem; font-weight: bold;">ПЕРВЫЙ ЭКЗАМЕН ПО РОССИЙСКОМУ ИНТЕРНЕТУ</div>
+    </div>
+
+    <div id="start-screen">
+        <div class="warning-strip">ВНИМАНИЕ: СТРОГИЙ РЕЖИМ КОНТРОЛЯ</div>
+        <p>Вы приступаете к экзамену ПЭПРИ. Проходной балл — 70 из 100.</p>
+        <p><strong>ЖЕСТКИЕ ПРАВИЛА:</strong><br>
+        1. Любое подозрение на использование сторонних ресурсов — аннулирование.<br>
+        2. Запрещен уход из окна и смена ориентации.<br>
+        3. Система следит за активностью курсора и фокусом.</p>
+        <button onclick="startExam()">НАЧАТЬ ЭКЗАМЕН</button>
+    </div>
+
+    <div id="quiz-content" class="hidden">
+        <div class="question-box">
+            <div id="q-num" style="font-size: 0.8rem; color: #666; margin-bottom: 5px;">Вопрос 1 из 50</div>
+            <div id="q-text" class="q-title">Загрузка...</div>
+            <div id="q-options" class="options"></div>
+        </div>
+        <div class="footer">
+            <div style="font-size: 0.7rem; color: #888;">СЕССИЯ: ПЭПРИ-2026</div>
+            <button onclick="nextQuestion()">ОТВЕТИТЬ</button>
+        </div>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <div id="diploma">
+            <h2 style="color: #daa520; margin: 0;">ДИПЛОМ</h2>
+            <p>Участник завершил проверку знаний Рунета.</p>
+            <div style="font-size: 3rem; font-weight: bold; margin: 20px 0;">
+                <span id="final-score">0</span> / 100
+            </div>
+            <p id="grade-text" style="font-weight: bold;"></p>
+            <p style="font-size: 0.7rem; margin-top: 30px;">Печать ГЕК ПЭПРИ 2026</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Вопросы те же самые (50 штук)
+    const questions = [
+        { q: "Какое событие считается точкой начала Рунета в проф. среде?", a: ["Подключение к сетям", "Регистрация .su", "Делегирование домена .ru", "Запуск Rambler"], c: 2 },
+        { q: "В каком году произошло делегирование домена .ru?", a: ["1993", "1994", "1995", "1996"], c: 1 },
+        { q: "Какой домен верхнего уровня был введён ранее и используется до сих пор?", a: [".rf", ".ru", ".su", ".cis"], c: 2 },
+        { q: "Какое определение Рунета наиболее академически точное?", a: ["Интернет в РФ", "Сайты .ru", "Русские пользователи", "Совокупность ресурсов и пользователей"], c: 3 },
+        { q: "В каком году Яндекс представлен как поисковая система?", a: ["1996", "1997", "1998", "1999"], c: 1 },
+        { q: "Какой сервис фактически утратил лидерство к началу 2000-х?", a: ["Yahoo", "Google", "Rambler", "AltaVista"], c: 2 },
+        { q: "Какой из сервисов появился раньше других?", a: ["Google", "Яндекс", "Rambler", "Bing"], c: 2 },
+        { q: "В каком году был зарегистрирован YouTube?", a: ["2004", "2005", "2006", "2007"], c: 1 },
+        { q: "Что делает DNS?", a: ["Шифрует", "Превращает домен в IP", "Загружает HTML", "Кэширует"], c: 1 },
+        { q: "Корректная структура URL?", a: ["protocol://domain/path", "domain://protocol/path", "protocol/domain/path", "path://domain/protocol"], c: 0 },
+        { q: "Принципиальное свойство HTTPS?", a: ["TCP", "DNS", "Криптозащита", "Скорость"], c: 2 },
+        { q: "Что означает IP?", a: ["Internet Packet", "Internal Protocol", "Internet Protocol", "Information Process"], c: 2 },
+        { q: "Ключевая функция браузера?", a: ["Передача файлов", "Отображение HTML/CSS", "Управление DNS", "Шифрование"], c: 1 },
+        { q: "Отличие HTML от языков программирования?", a: ["Нет синтаксиса", "Нет логики выполнения", "Компиляция", "Офлайн"], c: 1 },
+        { q: "Что делает сервер?", a: ["Физическое устройство", "Обрабатывает клиентские запросы", "Только хранит", "Без протоколов"], c: 1 },
+        { q: "Что включает хостинг?", a: ["Только домен", "Только сервер", "Инфраструктуру для размещения", "Только DNS"], c: 2 },
+        { q: "Эффект VPN?", a: ["Скорость", "Маскировка и шифрование", "Удаление пакетов", "Ускорение DNS"], c: 1 },
+        { q: "Индексация в поиске — это:", a: ["Удаление", "Сканирование и добавление в базу", "Шифрование", "Кэш"], c: 1 },
+        { q: "Функция cookie:", a: ["Защита", "Хранение состояния сессии", "Передача файлов", "Ускорение"], c: 1 },
+        { q: "Облачное хранилище — это:", a: ["Скорость", "Тип файлов", "Доступ через сеть к удалённым ресурсам", "Только браузер"], c: 2 },
+        { q: "Домен второго уровня — это:", a: [".ru", "example.ru", "http", "www"], c: 1 },
+        { q: "Что такое спам?", a: ["Массовость и нежелательность", "Скорость", "Протокол", "Размер"], c: 0 },
+        { q: "Браузер от Google?", a: ["Firefox", "Chrome", "Edge", "Safari"], c: 1 },
+        { q: "Что такое аккаунт?", a: ["Набор файлов", "Учётная запись пользователя", "IP-адрес", "Пароль"], c: 1 },
+        { q: "Что является логином?", a: ["Пароль", "Уникальный идентификатор", "Cookie", "IP"], c: 1 },
+        { q: "Не относится к мессенджерам?", a: ["Telegram", "Signal", "YouTube", "WhatsApp"], c: 2 },
+        { q: "SMTP нужен для:", a: ["Веб-страниц", "Почты", "Видео", "DNS"], c: 1 },
+        { q: "FTP — это:", a: ["Передача файлов", "Почта", "Шифрование", "Поиск"], c: 0 },
+        { q: "Онлайн — это:", a: ["Активное подключение", "Аккаунт", "Сервер", "Данные"], c: 0 },
+        { q: "Видеохостинг — это:", a: ["HTML", "Потоковое видео", "Домен", "DNS"], c: 1 },
+        { q: "Что такое TLS?", a: ["Алгоритм", "Протокол криптозащиты", "Браузер", "DNS"], c: 1 },
+        { q: "Первый процесс при открытии сайта?", a: ["CSS", "DNS-запрос", "JS", "Отрисовка"], c: 1 },
+        { q: "Год запуска ВКонтакте?", a: ["2005", "2006", "2007", "2008"], c: 1 },
+        { q: "Основатель ВКонтакте?", a: ["Волож", "Дуров", "Греф", "Брин"], c: 1 },
+        { q: "Год запуска RuTube?", a: ["2005", "2006", "2007", "2008"], c: 1 },
+        { q: "Кто доминировал до Яндекса?", a: ["Google", "Rambler", "Yahoo", "Bing"], c: 1 },
+        { q: "Основной домен РФ?", a: [".su", ".ru", ".rf", ".ua"], c: 1 },
+        { q: "Кириллический домен РФ?", a: [".рус", ".рф", ".ру", ".рос"], c: 1 },
+        { q: "Кто владеет VK сейчас?", a: ["Независимые", "VK (Mail.ru)", "Meta", "Яндекс"], c: 1 },
+        { q: "Часть Яндекса:", a: ["Telegram", "Яндекс.Карты", "WhatsApp", "Facebook"], c: 1 },
+        { q: "Российский видеохостинг?", a: ["Vimeo", "RuTube", "Twitch", "Dailymotion"], c: 1 },
+        { q: "Проект Дурова после VK?", a: ["ICQ", "Telegram", "Skype", "Viber"], c: 1 },
+        { q: "Мессенджер внутри VK?", a: ["Signal", "MAX", "Line", "WeChat"], c: 1 },
+        { q: "Функция Роскомнадзора?", a: ["Разработка", "Контроль и надзор", "Поиск", "Создание"], c: 1 },
+        { q: "Блокировка ресурса — это:", a: ["Удаление", "Ограничение доступа", "Архивация", "Сжатие"], c: 1 },
+        { q: "Метод блокировки:", a: ["Отключение", "DNS/IP-фильтрация", "Удаление", "Устройств"], c: 1 },
+        { q: "Количество заблокированных сайтов?", a: ["<1к", "<10к", ">100к", "<100"], c: 2 },
+        { q: "Для обхода блокировок используют:", a: ["VPN", "BIOS", "Paint", "Excel"], c: 0 },
+        { q: "Российская почта:", a: ["Gmail", "Outlook", "Mail.ru", "Proton"], c: 2 },
+        { q: "Аналог Google в Рунете:", a: ["Bing", "Yahoo", "Яндекс", "Baidu"], c: 2 }
+    ];
+
+    let currentQ = 0; let score = 0; let examActive = false;
+
+    if(localStorage.getItem('pepri_banned')) showBan();
+
+    function showBan() {
+        examActive = false; localStorage.setItem('pepri_banned', 'true');
+        document.getElementById('ban-screen').style.display = 'flex';
+        document.getElementById('main-window').style.display = 'none';
+    }
+
+    // Детекторы
+    window.addEventListener("blur", () => { if(examActive) showBan(); });
+    document.addEventListener("visibilitychange", () => { if(document.hidden && examActive) showBan(); });
+    window.addEventListener("orientationchange", () => { if(examActive) showBan(); });
+
+    function startExam() {
+        examActive = true;
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('quiz-content').classList.remove('hidden');
+        render();
+    }
+
+    function render() {
+        const q = questions[currentQ];
+        document.getElementById('q-num').innerText = `Вопрос ${currentQ + 1} из 50`;
+        document.getElementById('q-text').innerText = q.q;
+        const opt = document.getElementById('q-options');
+        opt.innerHTML = '';
+        q.a.forEach((item, i) => {
+            opt.innerHTML += `<label><input type="radio" name="ans" value="${i}"> ${item}</label>`;
+        });
+    }
+
+    function nextQuestion() {
+        const sel = document.querySelector('input[name="ans"]:checked');
+        if(!sel) return;
+        if(parseInt(sel.value) === questions[currentQ].c) score += 2;
+        currentQ++;
+        if(currentQ < questions.length) render(); else finish();
+    }
+
+    function finish() {
+        examActive = false;
+        document.getElementById('quiz-content').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('grade-text').innerText = score >= 70 ? "ЭКЗАМЕН СДАН" : "НЕУДОВЛЕТВОРИТЕЛЬНО";
+    }
+</script>
+</body>
+</html>
+
